@@ -21,6 +21,10 @@ RUN apt-get update \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
     libxslt1-dev
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install mcrypt
+
+
 
 # Install Node 7.1.0
 RUN curl -LO "https://nodejs.org/dist/v7.1.0/node-v7.1.0-linux-x64.tar.gz" \
@@ -44,8 +48,7 @@ RUN apt-get update && \
 #Install Drush9 via composer
 # Set the Drush version.
 ENV DRUSH_VERSION 9.0.0
-RUN composer global require drush/drush:8.1.16
-RUN composer global require drush/drush:9.0.0
+
 
 
 
