@@ -1,8 +1,5 @@
 FROM php:7.1-apache
 
-MAINTAINER drupal-docker
-
-
 
 # Install Git and wget.
 RUN apt-get update
@@ -44,20 +41,12 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
-
-
 #Install Drush9 via composer
 # Set the Drush version.
 ENV DRUSH_VERSION 9.0.0
-RUN composer global require drush/drush:"9.0.0" --prefer-dist
 RUN composer global require drush/drush:8.1.16
 RUN composer global require drush/drush:9.0.0
 
-
-#Install Drupal version compatible with php 7.1
-# https://www.drupal.org/node/3060/release
-ENV DRUPAL_VERSION 7.59
-ENV DRUPAL_MD5 7e09c6b177345a81439fe0aa9a2d15fc
 
 
 #Install Drupal console launcher
