@@ -46,9 +46,7 @@ RUN apt-get update && \
 # Set the Drush version.
 ENV DRUSH_VERSION 9.0.0
 RUN composer global require drush/drush:"9.0.0" --prefer-dist
-RUN ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush
-RUN ln -s /root/.composer/vendor/drush/drush/drush.complete.sh /etc/bash_completion.d/
-RUN mkdir /etc/drush
+
 
 #Install Drupal console launcher
 RUN php -r "readfile('https://drupalconsole.com/installer');" > drupal.phar && \
