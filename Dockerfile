@@ -24,8 +24,6 @@ RUN apt-get update \
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install mcrypt
 
-
-
 # Install Node 7.1.0
 RUN curl -LO "https://nodejs.org/dist/v7.1.0/node-v7.1.0-linux-x64.tar.gz" \
 && tar -xzf node-v7.1.0-linux-x64.tar.gz -C /usr/local --strip-components=1 \
@@ -36,7 +34,6 @@ RUN curl -LO "https://nodejs.org/dist/v7.1.0/node-v7.1.0-linux-x64.tar.gz" \
 RUN npm install -g npm@4.2.0
 
 # Install composer
-
 RUN apt-get update && \
     apt-get install -y git zip unzip && \
     php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
@@ -48,9 +45,10 @@ RUN apt-get update && \
 #Install Drush9 via composer
 # Set the Drush version.
 ENV DRUSH_VERSION 9.0.0
-
-
-
+RUN composer global require drush/drush:"9.0.0" --prefer-dist
+RUN ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush
+RUN ln -s /root/.composer/vendor/drush/drush/drush.complete.sh /etc/bash_completion.d/
+RUN mkdir /etc/drush
 
 #Install Drupal console launcher
 RUN php -r "readfile('https://drupalconsole.com/installer');" > drupal.phar && \
