@@ -45,7 +45,8 @@ RUN apt-get update && \
 #Install Drush9 via composer
 # Set the Drush version.
 ENV DRUSH_VERSION 9.0.0
-RUN composer global require drush/drush:"9.0.0" --prefer-dist
+RUN composer global require drush/drush:8.1.16
+RUN composer global require drush/drush:9.0.0 
 
 
 #Install Drupal console launcher
