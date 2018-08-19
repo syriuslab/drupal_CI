@@ -1,0 +1,33 @@
+# Download docksal php 7.1 docker image and build code source artifact for Acquia Cloud Site Factory platform.
+# -----
+# Use Php 7.1 image from docksal project.
+image: syriuslab/drupal_ci
+
+# We need the full commit history for deployment.
+clone:
+  depth: full
+
+# Run PHPCS against Drupal and DrupalPractice coding standards.
+pipelines:
+  custom:
+    bv_build:
+      - step:
+          name: Setup composer cache and run basic commands
+          caches:
+            - composer
+          script:
+            - pwd
+            - ls
+            - mkdir -p ~/.ssh  # ssh key policies start from here
+            - touch ~/.ssh/id_rsa
+            - cat my_known_hosts >> ~/.ssh/known_hosts # these following lines enforce security
+            - (umask  077 ; echo $SSH_PRIVATE_KEY | base64 --decode > ~/.ssh/id_rsa)
+            - echo $SSH_PRIVATE_KEY &gt; ~/.ssh/id_rsa.tmp # assumes base64 encoded ssh key without a passphrase
+            - base64 -d  -i ~/.ssh/id_rsa.tmp > ~/.ssh/id_rsa
+            - chmod 600 ~/.ssh/id_rsa
+            - echo -e "Host *\n StrictHostKeyChecking no\n UserKnownHostsFile=/dev/null" &gt; ~/.ssh/config
+            - mkdir temp
+            - cd temp
+            - git clone "http://gitlab.insign.fr:8000/drupal/"
+            - git clone git@bitbucket.org:insignagency/bureau-veritas-frontend.git
+            - cd bureau-veritas-frontend
